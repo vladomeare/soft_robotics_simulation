@@ -1,7 +1,7 @@
 % This function returns an array of normal vectors in a form of norm_vector = [U,V] for
 % an input array of points P = [X,Y]
 
-function norm_vector = find_normal_direction(P,pressure_inside_flag)
+function norm_vector = find_normal_direction(P,pressure_inside_flag, pressure_norm)
 s = size(P);
 len = s(1)/2;
 X = P(1:len);           % splitting P in parts
@@ -30,6 +30,15 @@ if pressure_inside_flag == 1    % The pressure goes in other direction
 end
 
 % We now need to scale the vectors
+
+for i = 1:1:len
+    alfa = pressure_norm/sqrt(norm_vector(i)^2+norm_vector(len+i)^2);
+    norm_vector(i) = alfa*norm_vector(i);
+    norm_vector(len+i) = alfa*norm_vector(len+i);
+end
+% alfa = pressure_norm/norm(norm_vector)
+% norm_vector = alfa*norm_vector;
+%S = find_pressure_norm(P(1:len),P((len+1):(2*len)));
 
 
 end
